@@ -20,29 +20,37 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-50 to-white">
+    <div className="min-h-screen">
       {/* Header */}
-      <header className="bg-white border-b border-neutral-200 sticky top-0 z-50">
+      <header className="glass sticky top-0 z-50 border-b border-white/20 backdrop-blur-lg">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <span className="text-2xl">🛡️</span>
-              <span className="font-bold text-neutral-900">Coach Rupture</span>
-            </div>
+          <div className="flex justify-between items-center h-18 py-4">
+            <Link href="/dashboard" className="flex items-center space-x-3 group">
+              <div className="w-11 h-11 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl shadow-md group-hover:shadow-glow transition-all duration-300 flex items-center justify-center transform group-hover:scale-105">
+                <span className="text-2xl">🛡️</span>
+              </div>
+              <div>
+                <span className="font-bold text-neutral-900 text-lg">Coach Rupture</span>
+                <div className="flex items-center gap-1.5 mt-0.5">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-xs text-neutral-500">En ligne</span>
+                </div>
+              </div>
+            </Link>
 
             {/* Desktop navigation */}
-            <nav className="hidden md:flex space-x-1">
+            <nav className="hidden md:flex items-center gap-2">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  className={`px-5 py-2.5 rounded-xl font-medium transition-all duration-300 ${
                     pathname === item.href
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-neutral-600 hover:bg-neutral-100'
+                      ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-soft'
+                      : 'text-neutral-600 hover:bg-white/50 hover:shadow-soft'
                   }`}
                 >
-                  <span className="mr-2">{item.icon}</span>
+                  <span className="mr-2 text-lg">{item.icon}</span>
                   {item.label}
                 </Link>
               ))}
@@ -51,7 +59,7 @@ export default function DashboardLayout({
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-neutral-100"
+              className="md:hidden p-2.5 rounded-xl hover:bg-white/50 transition-all active:scale-95"
             >
               <svg
                 className="w-6 h-6"
@@ -80,16 +88,16 @@ export default function DashboardLayout({
 
           {/* Mobile navigation */}
           {mobileMenuOpen && (
-            <nav className="md:hidden py-4 space-y-2">
+            <nav className="md:hidden pb-4 space-y-2 animate-slide-down">
               {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-3 rounded-lg font-medium transition-all ${
+                  className={`block px-4 py-3 rounded-xl font-medium transition-all ${
                     pathname === item.href
-                      ? 'bg-primary-100 text-primary-700'
-                      : 'text-neutral-600 hover:bg-neutral-100'
+                      ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white shadow-soft'
+                      : 'text-neutral-600 hover:bg-white/50'
                   }`}
                 >
                   <span className="mr-2">{item.icon}</span>
@@ -107,15 +115,17 @@ export default function DashboardLayout({
       </main>
 
       {/* Emergency anti-relapse button (sticky bottom) */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed bottom-6 right-6 z-40 animate-scale-in" style={{ animationDelay: '0.5s' }}>
         <button
           onClick={() => {
             // This will be handled by the chat component
             window.dispatchEvent(new CustomEvent('trigger-anti-relapse'));
           }}
-          className="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-4 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+          className="group bg-gradient-to-r from-red-600 to-red-500 hover:from-red-700 hover:to-red-600 text-white font-bold px-6 py-4 rounded-2xl shadow-soft-lg hover:shadow-glow transform hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
         >
-          🛑 J'ai envie de craquer
+          <span className="text-xl animate-pulse-slow">🛑</span>
+          <span className="hidden sm:inline">J'ai envie de craquer</span>
+          <span className="sm:hidden">SOS</span>
         </button>
       </div>
     </div>

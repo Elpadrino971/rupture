@@ -113,58 +113,88 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-lg overflow-hidden" style={{ height: 'calc(100vh - 12rem)' }}>
+    <div className="max-w-5xl mx-auto animate-fade-in">
+      <div className="card-glass overflow-hidden" style={{ height: 'calc(100vh - 12rem)' }}>
         {/* Chat header */}
-        <div className="bg-primary-600 text-white p-4">
-          <h1 className="text-xl font-semibold flex items-center gap-2">
-            <span>💬</span>
-            Coach Post-Rupture
-          </h1>
-          <p className="text-sm text-primary-100 mt-1">
-            Protecteur • Logique • Bienveillant
-          </p>
+        <div className="bg-gradient-to-r from-primary-600 to-primary-500 text-white p-6 shadow-md">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold flex items-center gap-3">
+                <span className="text-3xl">💬</span>
+                Coach Post-Rupture
+              </h1>
+              <div className="flex items-center gap-2 mt-2">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <p className="text-sm text-primary-100">
+                  Protecteur • Logique • Bienveillant
+                </p>
+              </div>
+            </div>
+            <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg backdrop-blur-sm">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              <span className="text-sm font-medium">Mode sécurisé</span>
+            </div>
+          </div>
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4" style={{ height: 'calc(100% - 140px)' }}>
-          {messages.map((message) => (
+        <div className="bg-gradient-to-b from-neutral-50/50 to-white overflow-y-auto p-6 space-y-4" style={{ height: 'calc(100% - 160px)' }}>
+          {messages.map((message, index) => (
             <div
               key={message.id}
-              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}
+              style={{ animationDelay: `${index * 0.05}s` }}
             >
+              {message.role === 'assistant' && (
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center mr-3 flex-shrink-0 shadow-md">
+                  <span className="text-xl">🤖</span>
+                </div>
+              )}
               <div
-                className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                className={`max-w-[75%] rounded-2xl px-5 py-3 shadow-soft ${
                   message.role === 'user'
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-white'
                     : message.isAntiRelapseMode
-                    ? 'bg-red-50 border-2 border-red-300 text-neutral-900'
-                    : 'bg-neutral-100 text-neutral-900'
+                    ? 'bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-300 text-neutral-900'
+                    : 'bg-white border border-neutral-200 text-neutral-900'
                 }`}
               >
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">
                   {message.content}
                 </div>
                 <div
-                  className={`text-xs mt-2 ${
+                  className={`text-xs mt-2 flex items-center gap-2 ${
                     message.role === 'user' ? 'text-primary-100' : 'text-neutral-500'
                   }`}
                 >
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                  </svg>
                   {new Date(message.timestamp).toLocaleTimeString('fr-FR', {
                     hour: '2-digit',
                     minute: '2-digit',
                   })}
                 </div>
               </div>
+              {message.role === 'user' && (
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-calm-400 to-calm-600 flex items-center justify-center ml-3 flex-shrink-0 shadow-md text-white font-bold">
+                  Toi
+                </div>
+              )}
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-neutral-100 rounded-2xl px-4 py-3">
+            <div className="flex justify-start animate-scale-in">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center mr-3 flex-shrink-0 shadow-md">
+                <span className="text-xl">🤖</span>
+              </div>
+              <div className="bg-white border border-neutral-200 rounded-2xl px-5 py-4 shadow-soft">
                 <div className="flex space-x-2">
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" />
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce delay-100" />
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce delay-200" />
+                  <div className="w-2.5 h-2.5 bg-primary-400 rounded-full animate-bounce" />
+                  <div className="w-2.5 h-2.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                  <div className="w-2.5 h-2.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                 </div>
               </div>
             </div>
@@ -173,23 +203,26 @@ export default function DashboardPage() {
         </div>
 
         {/* Input */}
-        <div className="border-t border-neutral-200 p-4">
-          <div className="flex gap-2">
+        <div className="bg-white border-t border-neutral-200 p-4 shadow-inner-soft">
+          <div className="flex gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Écris ce que tu ressens..."
-              className="flex-1 px-4 py-3 border-2 border-neutral-200 rounded-lg focus:border-primary-600 focus:outline-none"
+              className="input-field"
               disabled={isLoading}
             />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
-              className="px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg disabled:bg-neutral-300 disabled:cursor-not-allowed transition-all"
+              className="btn-primary whitespace-nowrap"
             >
-              Envoyer
+              <span className="hidden md:inline">Envoyer</span>
+              <svg className="w-5 h-5 md:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
             </button>
           </div>
         </div>
