@@ -1,0 +1,47 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0158a1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0c8ce9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="100%" style="stop-color:#e0effe;stop-opacity:0.95" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded rectangle background -->
+  <rect width="512" height="512" rx="110" fill="url(#bgGradient)"/>
+
+  <!-- Shield shape -->
+  <path d="M256 120
+           C 200 120, 160 140, 160 140
+           L 160 280
+           C 160 360, 256 400, 256 400
+           C 256 400, 352 360, 352 280
+           L 352 140
+           C 352 140, 312 120, 256 120 Z"
+        fill="url(#shieldGradient)"
+        stroke="#0158a1"
+        stroke-width="8"/>
+
+  <!-- Heart symbol inside shield -->
+  <path d="M256 220
+           C 256 220, 240 200, 220 200
+           C 195 200, 180 215, 180 240
+           C 180 270, 256 320, 256 320
+           C 256 320, 332 270, 332 240
+           C 332 215, 317 200, 292 200
+           C 272 200, 256 220, 256 220 Z"
+        fill="#0158a1"
+        opacity="0.8"/>
+
+  <!-- Checkmark overlay -->
+  <path d="M 230 260 L 250 280 L 290 230"
+        stroke="#ffffff"
+        stroke-width="16"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+</svg>
